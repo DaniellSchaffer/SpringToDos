@@ -10,6 +10,7 @@ import co.edu.utb.softeng.springtodos.service.ToDoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,7 +37,7 @@ public class ToDoController {
     }
     
     @RequestMapping(value={"/{id}"}, method = RequestMethod.GET)
-    public @ResponseBody ToDo getById(Long id) {
+    public @ResponseBody ToDo getById(@PathVariable Long id) { //Find a paramater in url that is id
         return service.getToDoById(id);
     }
     

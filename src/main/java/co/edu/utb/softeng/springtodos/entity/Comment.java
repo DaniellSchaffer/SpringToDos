@@ -37,6 +37,22 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public ToDo getToDo() {
+        return toDo;
+    }
+
+    public void setToDo(ToDo toDo) {
+        this.toDo = toDo;
+    }
+
     
     
 }

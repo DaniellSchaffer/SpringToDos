@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author william
  */
-@Repository //Imports the DAOs into the DI container;makes the unchecked exceptions (thrown from DAO methods) eligible for translation into Spring DataAccessException.
+@Repository //Imports the DAOs into the DI container; makes the unchecked exceptions (thrown from DAO methods) eligible for translation into Spring DataAccessException.
 public class ToDoDaoImpl implements ToDoDao{
     
     @Autowired
