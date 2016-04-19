@@ -17,16 +17,17 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-@Configuration 
+@Configuration
 @ComponentScan("co.edu.utb.softeng.springtodos")
 @EnableWebMvc
 @EnableTransactionManagement
-public class ApplicationContextConfig extends WebMvcConfigurerAdapter{
+public class ApplicationContextConfig extends WebMvcConfigurerAdapter {
 
     @Bean(name = "viewResolver")
     public InternalResourceViewResolver getViewResolver() {
@@ -35,14 +36,20 @@ public class ApplicationContextConfig extends WebMvcConfigurerAdapter{
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
-    
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**")
                 .addResourceLocations("/resources/assets/");
     }
-    
-    
+
+    @Override
+    //The following is used when you want spring dispatcher to serve static resources under the web root using default servlet
+    //This prevents requests such as .js/.css to be mapped to DispatcherServlet
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -51,8 +58,7 @@ public class ApplicationContextConfig extends WebMvcConfigurerAdapter{
                 .allowedHeaders("Origin", "x-requested-with", "Content-Type", "Accept")
                 .allowCredentials(true).maxAge(3600);
     }
-        
-  
+
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
@@ -69,10 +75,9 @@ public class ApplicationContextConfig extends WebMvcConfigurerAdapter{
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         properties.put("hibernate.hbm2ddl.auto", "update");
         return properties;
-    }  
-    
+    }
 
-    @Autowired    
+    @Autowired
     @Bean(name = "sessionFactory")
     public SessionFactory getSessionFactory(DataSource dataSource) {
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
@@ -87,21 +92,21 @@ public class ApplicationContextConfig extends WebMvcConfigurerAdapter{
         HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
         return transactionManager;
     }
-    
+
     private MappingJackson2HttpMessageConverter getJacksonMessageConverter() {
-        MappingJackson2HttpMessageConverter messageConverter = 
-                new MappingJackson2HttpMessageConverter();
+        MappingJackson2HttpMessageConverter messageConverter
+                = new MappingJackson2HttpMessageConverter();
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new Hibernate4Module());
         messageConverter.setObjectMapper(mapper);
         return messageConverter;
-        
+
     }
-    
+
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(getJacksonMessageConverter());
         super.configureMessageConverters(converters);
-    } 
+    }
 
 }

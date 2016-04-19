@@ -26,8 +26,8 @@ public class Comment implements Serializable {
     @Lob    
     private String text;
     
-    @ManyToOne
-    private ToDo toDo;
+    @ManyToOne 
+    private ToDo toDo; //Este es el lado dominante (no tiene @mappedby)
 
     public Long getId() {
         return id;

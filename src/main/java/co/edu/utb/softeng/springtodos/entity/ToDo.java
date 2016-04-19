@@ -31,7 +31,7 @@ public class ToDo implements Serializable {
     
     private String title;
     
-    @Lob
+    @Lob //Usar cuando el texto sea de más de 256 caracteres
     private String description;
     
     @Temporal(value=TemporalType.DATE)
@@ -40,8 +40,8 @@ public class ToDo implements Serializable {
     @ManyToMany
     private List<Category> categories;
     
-    @OneToMany(mappedBy="toDo")
-    private List<Comment> comments;
+    @OneToMany(mappedBy="toDo") 
+    private List<Comment> comments; //El lado dominante es por donde se hace la inserción en Hibernate. Es el lado que tiene la llave foránea
     
     @ElementCollection
     private List<String> tags;

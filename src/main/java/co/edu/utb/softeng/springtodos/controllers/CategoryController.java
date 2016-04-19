@@ -31,7 +31,7 @@ public class CategoryController {
         return "Hello, Spring!";
     }
     
-    @RequestMapping(value={"/all"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/", ""}, method = RequestMethod.GET)
     public @ResponseBody List<Category> getAll() {
         return service.getAllCategories();
     }

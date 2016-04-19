@@ -37,7 +37,7 @@ public class ToDoController {
     }
     
     @RequestMapping(value={"/{id}"}, method = RequestMethod.GET)
-    public @ResponseBody ToDo getById(@PathVariable Long id) { //Find a paramater in url that is id
+    public @ResponseBody ToDo getById(@PathVariable Long id) { //Finds a paramater in url that is id
         return service.getToDoById(id);
     }
     

@@ -30,7 +30,7 @@ public class CommentController {
         return "Hello, Spring!";
     }
     
-    @RequestMapping(value={"/all"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/", ""}, method = RequestMethod.GET)
     public @ResponseBody List<Comment> getAll() {
         return service.getAllComments();
     }
